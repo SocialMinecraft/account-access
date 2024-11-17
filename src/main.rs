@@ -1,5 +1,7 @@
 mod proto;
 mod util;
+mod handlers;
+mod store;
 
 use anyhow::Result;
 use async_nats::Client;
