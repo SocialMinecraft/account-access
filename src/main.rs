@@ -9,6 +9,7 @@ use protobuf::Message;
 use tokio::task::JoinSet;
 use tracing::info;
 use crate::handlers::create::create;
+use crate::handlers::verify::verify;
 use crate::store::Store;
 
 #[tokio::main]
@@ -38,6 +39,14 @@ async fn main() -> Result<()> {
         util::handle_requests(_nc, "accounts.access.create", move|_nc, msg| {
             create(_store.clone(), _nc, msg)
         }).await.expect("accounts.access.create");
+    });
+
+    let _nc = nc.clone();
+    let _store = store.clone();
+    set.spawn(async move {
+        util::handle_requests(_nc, "accounts.access.verify", move|_nc, msg| {
+            verify(_store.clone(), _nc, msg)
+        }).await.expect("accounts.access.verify");
     });
 
     set.join_all().await;

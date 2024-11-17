@@ -19,7 +19,7 @@ impl Store {
         Store { db }
     }
 
-    pub async fn creat_token(&self, account_id: &String, ttl: Duration) -> anyhow::Result<String> {
+    pub async fn create_token(&self, account_id: &String, ttl: Duration) -> anyhow::Result<String> {
 
         let re : sqlx::Result<RowDef> = sqlx::query_as!(
             RowDef,

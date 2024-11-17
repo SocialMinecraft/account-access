@@ -11,7 +11,7 @@ pub async fn create(db: Store, nc: Client, msg: async_nats::Message) -> anyhow::
     if let Some(reply) = msg.reply {
 
         // create the token
-        let token = db.creat_token(&request.account_id, Duration::minutes(15)).await?;
+        let token = db.create_token(&request.account_id, Duration::minutes(15)).await?;
         // todo - should check account_id is 16chars
         // todo - duration should be an env var.
 
