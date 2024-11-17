@@ -1,6 +1,7 @@
 use chrono::{Duration, Utc};
 use rand::{thread_rng, Rng};
 use sqlx::PgPool;
+use tracing::info;
 
 #[derive(Clone, Debug)]
 pub struct Store {
@@ -71,10 +72,15 @@ impl Store {
 
     pub fn generate_token() -> String {
         let mut rng = thread_rng();
-        (0..50)
-            .map(|_| format!("{:x}", rng.gen::<u8>()))
-            .collect::<Vec<String>>()
-            .join("")
+        const CHARSET: &[u8] = b"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let token = (0..50)
+            .map(|_| {
+                let idx = rng.gen_range(0..CHARSET.len());
+                CHARSET[idx] as char
+            })
+            .collect();
+        info!("Token generated: {}", token);
+        token
     }
 
 }
