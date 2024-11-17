@@ -6,7 +6,7 @@ use crate::store::Store;
 
 #[tracing::instrument]
 pub async fn create(db: Store, nc: Client, msg: async_nats::Message) -> anyhow::Result<()> {
-    let mut request = CreateAccountAccessToken::parse_from_bytes(&msg.payload)?;
+    let request = CreateAccountAccessToken::parse_from_bytes(&msg.payload)?;
 
     if let Some(reply) = msg.reply {
 

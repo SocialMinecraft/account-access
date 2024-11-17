@@ -1,4 +1,4 @@
-use chrono::{Duration, NaiveDateTime, Utc};
+use chrono::{Duration, Utc};
 use rand::{thread_rng, Rng};
 use sqlx::PgPool;
 
@@ -8,10 +8,10 @@ pub struct Store {
 }
 
 struct RowDef {
-    id: i64,
+    //id: i64,
     account_id: String,
     token: String,
-    expires_at: NaiveDateTime,
+    //expires_at: NaiveDateTime,
 }
 
 impl Store {
@@ -30,10 +30,8 @@ impl Store {
                 expires_at
             ) VALUES ($1, $2, $3)
             RETURNING
-                id,
                 account_id,
-                token,
-                expires_at
+                token
             ;"#,
             account_id,
             Self::generate_token(),
@@ -51,10 +49,8 @@ impl Store {
             RowDef,
             r#"
             SELECT
-                id,
                 account_id,
-                token,
-                expires_at
+                token
             FROM
                 tokens
             WHERE

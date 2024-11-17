@@ -5,7 +5,7 @@ use crate::store::Store;
 
 #[tracing::instrument]
 pub async fn verify(db: Store, nc: Client, msg: async_nats::Message) -> anyhow::Result<()> {
-    let mut request = ValidateAccountAccessToken::parse_from_bytes(&msg.payload)?;
+    let request = ValidateAccountAccessToken::parse_from_bytes(&msg.payload)?;
 
     if let Some(reply) = msg.reply {
 

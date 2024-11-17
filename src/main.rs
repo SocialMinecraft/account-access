@@ -4,10 +4,7 @@ mod handlers;
 mod store;
 
 use anyhow::Result;
-use async_nats::Client;
-use protobuf::Message;
 use tokio::task::JoinSet;
-use tracing::info;
 use crate::handlers::create::create;
 use crate::handlers::verify::verify;
 use crate::store::Store;
