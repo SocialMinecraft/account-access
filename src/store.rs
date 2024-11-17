@@ -56,7 +56,7 @@ impl Store {
                 tokens
             WHERE
                 token = $1 AND
-                expires_at <= CURRENT_TIMESTAMP
+                expires_at >= CURRENT_TIMESTAMP
             ;"#,
             token
         )
